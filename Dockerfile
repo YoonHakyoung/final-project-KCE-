@@ -5,10 +5,13 @@ WORKDIR /app
 COPY react-app/package.json react-app/yarn.lock ./
 RUN yarn install
 COPY react-app/ ./
+
+# Change user to root temporarily to execute build command
+USER root
 RUN yarn build
 
 # Stage 2: Serve the app using FastAPI and Uvicorn
-FROM python:3.8:alpine
+FROM python:3.8
 
 WORKDIR /app
 
